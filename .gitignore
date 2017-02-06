@@ -36,7 +36,7 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 .vscode
-demo/css
 dist
-demo/**/*.js
-demo/**/index.html
+demo/*.bundle.js
+demo/*/index.js
+demo/data.js
