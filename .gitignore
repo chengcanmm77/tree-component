@@ -39,4 +39,4 @@ jspm_packages
 dist
 demo/*.bundle.js
 demo/*/index.js
-demo/data.js
+demo/common.js
