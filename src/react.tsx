@@ -8,8 +8,7 @@ class Node extends React.Component<{
     change: (eventData?: common.EventData) => void;
 }, {}> {
     hovered = false;
-    clicked = false;
-    timer: number | null = null;
+    doubleClick = new common.DoubleClick();
 
     render() {
         let childrenElement: JSX.Element | null;
@@ -31,41 +30,18 @@ class Node extends React.Component<{
         }
         return (
             <li role="treeitem" className={this.nodeClassName}>
-                <i className="jstree-icon jstree-ocl" role="presentation" onClick={() => this.ontoggle()}></i><a className={this.anchorClassName} href="javascript:void(0)" onClick={() => this.onchange()} onMouseEnter={() => this.hover(true)} onMouseLeave={() => this.hover(false)}><i className="jstree-icon jstree-themeicon" role="presentation"></i>{this.props.data.text}</a>
+                <i className="jstree-icon jstree-ocl" role="presentation" onClick={() => this.ontoggle()}></i><a className={this.anchorClassName} href="javascript:void(0)" onClick={() => this.onchange()} onDoubleClick={() => this.ontoggle()} onMouseEnter={() => this.hover(true)} onMouseLeave={() => this.hover(false)}><i className="jstree-icon jstree-themeicon" role="presentation"></i>{this.props.data.text}</a>
                 {childrenElement}
             </li>
         );
     }
 
     get nodeClassName() {
-        const values = ["jstree-node"];
-        if (this.props.data.children && this.props.data.children.length > 0) {
-            if (this.props.data.state.opened) {
-                values.push("jstree-open");
-            } else {
-                values.push("jstree-closed");
-            }
-        } else {
-            values.push("jstree-leaf");
-        }
-        if (this.props.last) {
-            values.push("jstree-last");
-        }
-        return values.join(" ");
+        return common.getNodeClassName(this.props.data, this.props.last);
     }
 
     get anchorClassName() {
-        const values = ["jstree-anchor"];
-        if (this.props.data.state.selected) {
-            values.push("jstree-clicked");
-        }
-        if (this.props.data.state.disabled) {
-            values.push("jstree-disabled");
-        }
-        if (this.hovered) {
-            values.push("jstree-hovered");
-        }
-        return values.join(" ");
+        return common.getAnchorClassName(this.props.data, this.hovered);
     }
 
     hover(hovered: boolean) {
@@ -89,20 +65,9 @@ class Node extends React.Component<{
                 return;
             }
 
-            if (this.clicked) { // is a double click
-                this.clicked = false;
-                if (this.timer) {
-                    clearTimeout(this.timer);
-                    this.timer = null;
-                }
-                this.ontoggle(eventData);
-            } else { // first click
-                this.clicked = true;
-                this.timer = setTimeout(() => {
-                    this.clicked = false;
-                    this.props.change({ data: this.props.data });
-                }, 333);
-            }
+            this.doubleClick.onclick(() => {
+                this.props.change({ data: this.props.data });
+            });
         }
     }
 }
