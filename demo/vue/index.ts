@@ -1,6 +1,6 @@
 import * as Vue from "vue";
 import "../../dist/vue";
-import { data, clearSelectionOfTree, toggle, setSelectionOfTree, setParentsSelection } from "../common";
+import { data, clearSelectionOfTree, toggle, setSelectionOfTree, setParentsSelection, copy } from "../common";
 import * as common from "../../dist/common";
 
 /* tslint:disable:no-unused-new */
@@ -12,7 +12,6 @@ new Vue({
             data,
             selectedId: null,
             data2: JSON.parse(JSON.stringify(data)),
-            selectedId2: null,
         };
     },
     methods: {
@@ -27,6 +26,9 @@ new Vue({
                 }
             }
             eventData.data.state.selected = !eventData.data.state.selected;
+        },
+        drop(this: This, dropData: common.DropData) {
+            copy(dropData, this.data);
         },
         toggle2(eventData: common.EventData) {
             toggle(eventData);

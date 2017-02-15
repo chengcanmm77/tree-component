@@ -1,4 +1,4 @@
-import { TreeData, TreeNodeState, EventData } from "../dist/common";
+import { TreeData, TreeNodeState, EventData, DropPosition, DropData, getNodeFromPath } from "../dist/common";
 
 const rawData: Data[] = [
     {
@@ -87,10 +87,14 @@ function standardize(treeData: Data) {
     if (treeData.state.highlighted === undefined) {
         treeData.state.highlighted = false;
     }
-    if (treeData.children) {
-        for (const child of treeData.children) {
-            standardize(child);
-        }
+    if (treeData.state.dropPosition === undefined) {
+        treeData.state.dropPosition = DropPosition.empty;
+    }
+    if (treeData.children === undefined) {
+        treeData.children = [];
+    }
+    for (const child of treeData.children) {
+        standardize(child);
     }
 }
 
@@ -152,6 +156,25 @@ export function setParentsSelection(tree: TreeData[], path: number[]) {
     }
     for (const parent of parents) {
         parent.state.selected = parent.children!.every(child => child.state.selected);
+    }
+}
+
+export function copy(dropData: DropData, treeData: TreeData[]) {
+    if (dropData.targetData.state.dropPosition === DropPosition.inside) {
+        if (dropData.targetData.children) {
+            dropData.targetData.children.push(JSON.parse(JSON.stringify(dropData.sourceData)));
+        } else {
+            dropData.targetData.children = [JSON.parse(JSON.stringify(dropData.sourceData))];
+        }
+        dropData.targetData.state.opened = true;
+    } else {
+        const startIndex = dropData.targetPath[dropData.targetPath.length - 1] + (dropData.targetData.state.dropPosition === DropPosition.up ? 0 : 1);
+        const parent = getNodeFromPath(treeData, dropData.targetPath.slice(0, dropData.targetPath.length - 1));
+        if (parent && parent.children) {
+            parent.children!.splice(startIndex, 0, JSON.parse(JSON.stringify(dropData.sourceData)));
+        } else {
+            treeData.splice(startIndex, 0, JSON.parse(JSON.stringify(dropData.sourceData)));
+        }
     }
 }
 
