@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/style.min.css" />
-<link rel="stylesheet" href="../index.css" />
+<link rel="stylesheet" href="../../dist/tree.min.css" />
+<style>
+.my-custom-icon {
+background-image: url("../tree-icon.png") !important;
+background-position: center center !important;
+background-size: auto;
+}
+</style>
 </head><body>
 <div id="container">
 <tree :data="data"
@@ -17,5 +23,5 @@ selected id: {{selectedId}}
 @toggle="toggle2(arguments[0])"
 @change="change2(arguments[0])"></tree>
 </div>
-<script src="../vue.bundle-ef8b4a50086e1cc8bf4848b0512dbde0.js" crossOrigin="anonymous" integrity="sha256-bkddSCYud0MX6fXBj/BW4CWBgPxpKMSz5++3keBS5zM="></script>
+<script src="../vue.bundle-14e40d3a657e150edb493144067f2d1b.js" crossOrigin="anonymous" integrity="sha256-r/UdZjC8o2JlOp1OKy1WH0KY9amGdvPVanAtJlrwDjo="></script>
 </body></html>

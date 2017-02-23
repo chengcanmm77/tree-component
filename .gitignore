@@ -40,3 +40,4 @@ dist
 demo/*.bundle.js
 demo/*/index.js
 demo/common.js
+*.scssc
