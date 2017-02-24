@@ -11,17 +11,24 @@ background-size: auto;
 </style>
 </head><body>
 <div id="container">
+default:
 <tree :data="data"
-:draggable="true"
 @toggle="toggle(arguments[0])"
-@change="change(arguments[0])"
-@drop="drop(arguments[0])"></tree>
+@change="change(arguments[0])"></tree>
 selected id: {{selectedId}}
 <hr/>
+checkbox:
 <tree :data="data2"
 :checkbox="true"
 @toggle="toggle2(arguments[0])"
 @change="change2(arguments[0])"></tree>
+<hr/>
+draggable:
+<tree :data="data3"
+:draggable="true"
+@toggle="toggle3(arguments[0])"
+@change="change3(arguments[0])"
+@drop="drop3(arguments[0])"></tree>
 </div>
-<script src="../vue.bundle-14e40d3a657e150edb493144067f2d1b.js" crossOrigin="anonymous" integrity="sha256-r/UdZjC8o2JlOp1OKy1WH0KY9amGdvPVanAtJlrwDjo="></script>
+<script src="../vue.bundle-22abcec4f116e18081f3baec93447c6e.js" crossOrigin="anonymous" integrity="sha256-VGKx8naTC8kZ7BP7/8N0C9In4LPspksVN+TqHUEsfsI="></script>
 </body></html>
