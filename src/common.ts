@@ -20,7 +20,10 @@ export type EventData = {
     path: number[];
 };
 
-import "tslib";
+import { __extends, __decorate, __assign } from "tslib";
+(window as any).__extends = __extends;
+(window as any).__decorate = __decorate;
+(window as any).__assign = __assign;
 
 export class DoubleClick {
     clicked = false;
@@ -43,6 +46,14 @@ export class DoubleClick {
             }
         }
     }
+}
+
+export function getContainerClassName(noDots: boolean | undefined) {
+    const values = ["tree-container-ul", "tree-children"];
+    if (noDots) {
+        values.push("tree-no-dots");
+    }
+    return values.join(" ");
 }
 
 export function getNodeClassName(data: TreeData, last: boolean) {
@@ -93,7 +104,7 @@ export function getCheckboxClassName(data: TreeData) {
 }
 
 export function getRootClassName(checkbox: boolean | undefined) {
-    return `tree tree-default tree-default-responsive ${checkbox ? "tree-checkbox-selection tree-checkbox-no-clicked" : ""}`;
+    return `tree tree-default ${checkbox ? "tree-checkbox-selection tree-checkbox-no-clicked" : ""}`;
 }
 
 export function getIconClassName(icon: string | false | undefined) {
